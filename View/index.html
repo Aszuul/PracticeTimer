@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <script type="text/javascript" src="/dist/bundle.js"></script>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <p id="currentuser"></p>
+    <p id="piece"></p>
+    <p id="timeData"></p>
+    <label>Duration:</label>
+    <input type="number" name="duration" id="duration" value="30"/><br>
+    <button id="start" onclick="myBundle.start(document.getElementById('duration').value)">Start Timer</button>
+    <br>
+    <table>
+        <tr>
+            <label>UserName:</label>
+        </tr>
+        <tr>
+            <input type="string" name="username" id="username" value="default"/><br>
+        </tr>
+        <tr>
+            <button id="Set" class="b1" onclick="myBundle.setUser(document.getElementById('username').value)">Set User</button>
+            <button id="delete" class="b2" onclick="myBundle.deleteUser(document.getElementById('username').value)">Delete User</button>
+        </tr>
+    </table>
+    <br>
+</body>

@@ -1,0 +1,23 @@
+#duration {
+    font-size: large;
+}
+div{
+    margin: auto;
+    width: 50%;
+    border: 2px solid royalblue;
+    padding: 10px;
+}
+#timer{
+    font-size: x-large;
+}
+.b1{
+    border: 2px solid gray;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+.b2{
+    border: 2px solid bisque;
+    color: firebrick;
+    margin-right: 5px;
+    border-radius: 2px;
+}
