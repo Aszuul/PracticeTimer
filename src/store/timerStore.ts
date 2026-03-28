@@ -1,6 +1,10 @@
 // State store for timer using Zustand
 import { create } from 'zustand';
-import { TimerState } from '../types';
+import { TimerState, Song } from '../types';
+
+interface TimerStateExtended extends TimerState {
+  selectedSkillsSong: Song | null;
+}
 
 interface TimerActions {
   start: () => void;
@@ -11,14 +15,16 @@ interface TimerActions {
   setElapsedSeconds: (seconds: number) => void;
   tick: () => void;
   setPhase: (phase: 'skills' | 'target') => void;
+  setSelectedSkillsSong: (song: Song | null) => void;
 }
 
-export const useTimerStore = create<TimerState & TimerActions>(set => ({
+export const useTimerStore = create<TimerStateExtended & TimerActions>(set => ({
   totalMinutes: 0,
   elapsedSeconds: 0,
   isPaused: false,
   isRunning: false,
   phase: 'skills',
+  selectedSkillsSong: null,
 
   start: () =>
     set({
@@ -44,6 +50,7 @@ export const useTimerStore = create<TimerState & TimerActions>(set => ({
       isPaused: false,
       isRunning: false,
       phase: 'skills',
+      selectedSkillsSong: null,
     }),
 
   setTotalMinutes: (minutes: number) =>
@@ -69,5 +76,10 @@ export const useTimerStore = create<TimerState & TimerActions>(set => ({
   setPhase: (phase: 'skills' | 'target') =>
     set({
       phase,
+    }),
+
+  setSelectedSkillsSong: (song: Song | null) =>
+    set({
+      selectedSkillsSong: song,
     }),
 }));
