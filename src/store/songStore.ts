@@ -7,6 +7,7 @@ interface SongStoreState {
   skillsSongs: Song[];
   targetSongs: Song[];
   selectedSkillsSong: Song | null;
+  selectedTargetPiece: Song | null;
 }
 
 interface SongStoreActions {
@@ -15,12 +16,15 @@ interface SongStoreActions {
   removeSong: (type: 'skills' | 'target', id: string) => Promise<void>;
   getRandomSkillsSong: () => Song | null;
   setSelectedSkillsSong: (song: Song | null) => void;
+  getRandomTargetPiece: () => Song | null;
+  setSelectedTargetPiece: (song: Song | null) => void;
 }
 
 export const useSongStore = create<SongStoreState & SongStoreActions>((set, get) => ({
   skillsSongs: [],
   targetSongs: [],
   selectedSkillsSong: null,
+  selectedTargetPiece: null,
 
   loadSongsFromStorage: async () => {
     try {
@@ -78,7 +82,17 @@ export const useSongStore = create<SongStoreState & SongStoreActions>((set, get)
     return state.skillsSongs[Math.floor(Math.random() * state.skillsSongs.length)];
   },
 
+  getRandomTargetPiece: () => {
+    const state = get();
+    if (state.targetSongs.length === 0) return null;
+    return state.targetSongs[Math.floor(Math.random() * state.targetSongs.length)];
+  },
+
   setSelectedSkillsSong: (song: Song | null) => {
     set({ selectedSkillsSong: song });
   },
+
+  setSelectedTargetPiece: (song: Song | null) => {
+    set({ selectedTargetPiece: song });
+  }
 }));

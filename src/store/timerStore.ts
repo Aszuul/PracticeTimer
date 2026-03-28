@@ -4,6 +4,7 @@ import { TimerState, Song } from '../types';
 
 interface TimerStateExtended extends TimerState {
   selectedSkillsSong: Song | null;
+  selectedTargetPiece: Song | null;
 }
 
 interface TimerActions {
@@ -16,6 +17,7 @@ interface TimerActions {
   tick: () => void;
   setPhase: (phase: 'skills' | 'target') => void;
   setSelectedSkillsSong: (song: Song | null) => void;
+  setSelectedTargetPiece: (song: Song | null) => void;
 }
 
 export const useTimerStore = create<TimerStateExtended & TimerActions>(set => ({
@@ -25,6 +27,7 @@ export const useTimerStore = create<TimerStateExtended & TimerActions>(set => ({
   isRunning: false,
   phase: 'skills',
   selectedSkillsSong: null,
+  selectedTargetPiece: null,
 
   start: () =>
     set({
@@ -82,4 +85,9 @@ export const useTimerStore = create<TimerStateExtended & TimerActions>(set => ({
     set({
       selectedSkillsSong: song,
     }),
+
+  setSelectedTargetPiece: (song: Song | null) =>
+    set({
+      selectedTargetPiece: song,
+    })
 }));

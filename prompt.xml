@@ -86,3 +86,25 @@
     Using the default react native project build a modern styled Practice timer app that includes the features described above.
     MVP will be the basic timer and song lists then we can add features from there.
 </input>
+<issues>
+    <issue>
+        time remaining and countdown aren't clear. Make the current time the larger
+        timer and have it count down. Make the remaining time smaller under a label that says "total time"
+        and have it count up with a note of the full time shown in this format "current time / total time"
+    </issue>
+    <issue>
+        Target piece is not displaying.
+    </issue>
+    <issue>
+        Current piece (skill or target) should be larger.
+    </issue>
+    <issue>
+        need to carry theme and styling through to the skills entry page.
+    </issue>
+    <issue>
+        When timer ends it should display a list of all songs played and have a larger reset button.
+    </issue>
+    <issue>
+        with only one digit the textinput field will not allow backspace. should clear to the default value.
+    </issue>
+</issues>

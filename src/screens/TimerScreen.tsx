@@ -63,6 +63,12 @@ export const TimerScreen: React.FC = () => {
     }
   }, [timerState.phase, intervalLoaded]);
 
+  useEffect(() => {
+    if (timerState.phase === 'target' && !timerState.selectedTargetPiece && intervalLoaded) {
+      timerState.setSelectedTargetPiece(songState.getRandomTargetPiece());
+    }
+  }, [timerState.phase, intervalLoaded]);
+
   const handleSetTime = (minutes: string) => {
     const num = parseInt(minutes, 10);
     if (num > 0) {
@@ -166,6 +172,13 @@ export const TimerScreen: React.FC = () => {
       fontSize: 18,
       color: theme.colors.text,
     },
+    hiddenInput:{
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 20,
+      gap: 10,
+      opacity: 0,
+    },
     inputLabel: {
       fontSize: 14,
       color: theme.colors.textSecondary,
@@ -206,12 +219,12 @@ export const TimerScreen: React.FC = () => {
       paddingHorizontal: 15,
     },
     songLabel: {
-      fontSize: 12,
+      fontSize: 20,
       color: 'rgba(255, 255, 255, 0.6)',
       marginBottom: 5,
     },
     songName: {
-      fontSize: 16,
+      fontSize: 24,
       fontWeight: '600',
       color: '#FFFFFF',
       textAlign: 'center',
@@ -273,7 +286,7 @@ export const TimerScreen: React.FC = () => {
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.title}>Practice Timer</Text>
-          <View style={styles.inputContainer}>
+          <View style={timerState.isRunning ? styles.hiddenInput : styles.inputContainer}>
             <TextInput
               style={styles.input}
               placeholder="Minutes"
@@ -289,6 +302,20 @@ export const TimerScreen: React.FC = () => {
         </View>
 
         <View style={styles.timerDisplayContainer}>
+          {timerState.phase === 'skills' && timerState.selectedSkillsSong ? (
+            <View style={styles.songDisplay}>
+              <Text style={styles.songLabel}>Current Piece</Text>
+              <Text style={styles.songName}>{timerState.selectedSkillsSong.name}</Text>
+            </View>
+            ) : timerState.selectedTargetPiece ?
+            (
+              <View style={styles.songDisplay}>
+                <Text style={styles.songLabel}>Current Piece</Text>
+                <Text style={styles.songName}>{timerState.selectedTargetPiece.name}</Text>
+              </View>
+            ) : null
+          }
+          
           <Text style={styles.timerDisplay}>
             {formatTime(timerState.isRunning || timerState.isPaused ? timerState.elapsedSeconds : 0)}
           </Text>
@@ -301,12 +328,7 @@ export const TimerScreen: React.FC = () => {
               {formatTime(timeRemainingInPhase)} remaining
             </Text>
 
-            {timerState.phase === 'skills' && timerState.selectedSkillsSong && (
-              <View style={styles.songDisplay}>
-                <Text style={styles.songLabel}>Current Piece</Text>
-                <Text style={styles.songName}>{timerState.selectedSkillsSong.name}</Text>
-              </View>
-            )}
+            
           </View>
         </View>
 
