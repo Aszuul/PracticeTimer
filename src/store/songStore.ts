@@ -14,7 +14,7 @@ interface SongStoreActions {
   loadSongsFromStorage: () => Promise<void>;
   addSong: (type: 'skills' | 'target', name: string) => Promise<void>;
   removeSong: (type: 'skills' | 'target', id: string) => Promise<void>;
-  getRandomSkillsSong: () => Song | null;
+  getRandomSkillsSong: (excludeSongId?: string) => Song | null;
   setSelectedSkillsSong: (song: Song | null) => void;
   getRandomTargetPiece: () => Song | null;
   setSelectedTargetPiece: (song: Song | null) => void;
@@ -76,10 +76,21 @@ export const useSongStore = create<SongStoreState & SongStoreActions>((set, get)
     });
   },
 
-  getRandomSkillsSong: () => {
+  getRandomSkillsSong: (excludeSongId?: string) => {
     const state = get();
     if (state.skillsSongs.length === 0) return null;
-    return state.skillsSongs[Math.floor(Math.random() * state.skillsSongs.length)];
+    
+    // Filter out the excluded song
+    const availableSongs = excludeSongId
+      ? state.skillsSongs.filter(song => song.id !== excludeSongId)
+      : state.skillsSongs;
+    
+    // If no available songs after filtering, return any song
+    if (availableSongs.length === 0) {
+      return state.skillsSongs[Math.floor(Math.random() * state.skillsSongs.length)];
+    }
+    
+    return availableSongs[Math.floor(Math.random() * availableSongs.length)];
   },
 
   getRandomTargetPiece: () => {

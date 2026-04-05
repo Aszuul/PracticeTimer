@@ -15,6 +15,15 @@ export interface Song {
   createdAt: number;
 }
 
+// Session song tracking with timing
+export interface SessionSong {
+  name: string;
+  type: 'skills' | 'target';
+  startTime: number; // timestamp
+  endTime: number; // timestamp
+  duration: number; // seconds
+}
+
 // Settings types
 export interface AppSettings {
   darkMode: boolean;
